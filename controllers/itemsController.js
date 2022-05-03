@@ -12,10 +12,11 @@ const getItem = (req, reply) => {
 };
 
 const addItem = (req, reply) => {
-  const { name } = req.body;
+  const { name,completed } = req.body;
   const item = {
     id: uuidv4(),
     name,
+    completed
   };
 
   items = [...items, item];
@@ -35,10 +36,10 @@ const deleteItem = (req, reply) => {
 
 const updateItem = (req, reply) => {
   const { id } = req.params;
-  const { name } = req.body;
+  const { name,completed } = req.body;
 
   items = items.map((item) => 
-    (item.id === id ? { id, name } : item))
+    (item.id === id ? { id, name,completed } : item))
   
   item = items.find((item) => item.id == id);
 

@@ -5,7 +5,8 @@ const Item= {
     type:'object',
     properties:{
         id:{type:'string'},
-        name:{type:'string'}
+        name:{type:'string'},
+        completed:{type:'boolean'}
     }
 }
 //OPtions for get all items
@@ -36,7 +37,8 @@ const postItemOpts={
             type:'object',
             required:['name'],
             properties:{
-                name:{type:'string'}
+                name:{type:'string'},
+                completed:{type:'boolean'}
             }
         },
         response:{
@@ -73,20 +75,20 @@ const updateItemOpts={
 function itemRoutes(fastify,options,done){
 
     //get all items
-fastify.get('/items',getItemsOpts)
+fastify.get('/getAllTask',getItemsOpts)
 
 
 //return single item
-fastify.get('/items/:id', getItemOpts)
+fastify.get('/getTask/:id', getItemOpts)
 
 //add item
-fastify.post('/items',postItemOpts)
+fastify.post('/addTask',postItemOpts)
 
 //delete Item
-fastify.delete('/items/:id',deleteItemOpts)
+fastify.delete('/deleteTask/:id',deleteItemOpts)
 
 //Update Item
-fastify.put('/items/:id',updateItemOpts)
+fastify.put('/updateTask/:id',updateItemOpts)
 
 
 
