@@ -120,6 +120,14 @@ const deleteMongoOpts={
         }
     },
 }
+
+const updateMongoOpts={
+    schema:{
+        response:{
+            200:Item
+        }
+    },
+}
 // ==============
 function itemRoutes(fastify,options,done){
   
@@ -163,6 +171,7 @@ fastify.post('/addMongoTask',addMongoOpts, async function (req, reply) {
     reply.send(result.map(res => res.toJSON()))
   })
 
+  //Delete Task in mongoDB
   fastify.delete('/deleteMongoTask/:id',deleteMongoOpts, async function (req, reply) {
     // Or this.mongo.client.db('mydb').collection('users')
     const {id} =req.params
@@ -181,6 +190,28 @@ fastify.post('/addMongoTask',addMongoOpts, async function (req, reply) {
     //   reply.send(user)
     // })
     reply.send( {message: `Item ${id} has been removed ${result}`})
+  })
+
+  //Update Task in mongoDB
+  fastify.put('/updateMongoTask/:id',updateMongoOpts, async function (req, reply) {
+    // Or this.mongo.client.db('mydb').collection('users')
+    const {id} =req.params
+    const{completed}= req.body
+    const todoCollection = this.mongo.db.collection('todoCollection')
+console.log("COMPLETED STATUS",completed)
+   
+    const result = await todoCollection.findOneAndUpdate({_id:this.mongo.ObjectId(id)},{$set:{ completed:completed}});
+  
+    // if the id is an ObjectId format, you need to create a new ObjectId
+    // const id = this.mongo.ObjectId(req.params.id)
+    // todoCollection.findOne({ id }, (err, user) => {
+    //   if (err) {
+    //     reply.send(err)
+    //     return
+    //   }
+    //   reply.send(user)
+    // })
+    reply.send( {message: `Item ${id} has been updated ${result}`})
   })
 
 done()
