@@ -1,4 +1,5 @@
 const fastify = require("fastify")({ logger: true });
+fastify.register(require('./plugin/mongo'))
 fastify.register(require("@fastify/swagger"), {
   exposeRoute: true,
   routePrefix: "/docs",
@@ -6,7 +7,6 @@ fastify.register(require("@fastify/swagger"), {
     info: { title: "todo-v2-api" },
   },
 });
-
 fastify.register(require("./routes/items"));
 
 const PORT = 5000;

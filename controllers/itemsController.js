@@ -1,5 +1,6 @@
 const { v4: uuidv4 } = require("uuid");
 let items = require("../items");
+const fastify=require('fastify')
 
 const getItems = (req, reply) => {
   reply.send(items);
@@ -11,7 +12,7 @@ const getItem = (req, reply) => {
   reply.send(item);
 };
 
-const addItem = (req, reply) => {
+const addItem =async (req, reply) => {
   const { name,completed } = req.body;
   const item = {
     id: uuidv4(),
@@ -20,7 +21,9 @@ const addItem = (req, reply) => {
   };
 
   items = [...items, item];
-
+  // const todoCollection= this.mongo.client.db('test').collection('todoCollection')
+  // const todoCollection = this.mongo.db.collection("todoCollection");
+  // const result = await todoCollection.insertOne(item);
   reply.code(201).send(item);
 };
 
