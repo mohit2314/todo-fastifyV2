@@ -6,6 +6,7 @@ fastify.register(require("@fastify/swagger"), {
   swagger: {
     info: { title: "todo-v2-api" },
   },
+  consumes: ['application/x-www-form-urlencoded']
 });
 fastify.register(require("./routes/items"));
 
